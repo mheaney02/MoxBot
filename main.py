@@ -34,7 +34,7 @@ def enter_hand(valid_deck):
 	for i in range(len(deck_hand)):
 		valid_card = False
 		while not valid_card:
-			hand_input = input(f'What is card {i} in your hand?')
+			hand_input = input(f'What is card {i + 1} in your hand?')
 			if hand_input in valid_deck:
 				valid_card = True
 				deck_hand[i] = hand_input
@@ -43,12 +43,35 @@ def enter_hand(valid_deck):
 	return deck_hand
 
 
+def cmc_land_count(valid_deck):
+	average_cmc = 0
+	landcount = 0
+	for card in valid_deck:
+		if "Land" in card.type:
+			landcount += 1
+		elif "Land" not in card.type:
+			average_cmc += card.cmc
+	average_cmc = average_cmc / (len(valid_deck) - landcount)
+	return average_cmc, landcount
+
+
+def mulligan(given_hand, averagecmc):
+	earlyplays = 0
+	landcount = 0
+	mull_hand = False
+
+
 while not programEnd:
-	print("Welcome to MoxBot!  Make sure your decklist is in the MoxBot folder and each card is a separate entry.")
+	print("Welcome to MoxBot!  Make sure your decklist is in the MoxBot folder and each card is on a separate line.")
 	print("There should be one card per line, and if it is a deck with a commander, it should not be included.")
 	deck = import_deck()
 	hand = enter_hand(deck)
 	print("Importing card data from Scryfall...")
-	for card in hand:
-		card = Card(card)  # Imports card data from Scryfall using the Scrython module
+	for i in range(len(deck)):
+		deck[i] = Card(deck[i])  # Imports card data from Scryfall using the Scrython module
+	for i in range(len(hand)):
+		hand[i] = Card(hand[i])
 	print("Card data imported!")
+	deck_cmc, num_lands = cmc_land_count(deck)
+	print(deck_cmc, num_lands)
+
