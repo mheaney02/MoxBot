@@ -1,3 +1,5 @@
+from card import Card
+
 def import_deck():
 	"""
 	Imports a .txt of a user-generated decklist into the program, so it can be utilized in the Card class.
@@ -30,9 +32,10 @@ def enter_hand(valid_deck):
 		valid_card = False
 		while not valid_card:
 			hand_input = input(f'What is card {i + 1} in your hand?')
-			if hand_input in valid_deck:
+			hand_input = Card(hand_input)
+			if hand_input.name in valid_deck:
 				valid_card = True
-				deck_hand[i] = hand_input
+				deck_hand[i] = hand_input  # Imports card data from Scryfall using the Scrython module
 			elif hand_input not in valid_deck:
 				print("That card is not in this deck! Please enter a valid card.")
 	return deck_hand
@@ -58,6 +61,27 @@ def cmc_land_count(valid_deck):
 	return average_cmc, landcount
 
 
-def mulligan(hand, hand_cmc, deck_cmc, hand_landcount):
-	earlyplays = 0
+def mulligan(hand, deck_cmc, hand_cmc, hand_landcount):
+	earlyplays = 0  # the number of cards that can be played in turns 1-3, excluding lands
 	mull_hand = False
+	reason = "none"
+
+	for card in hand:
+		if card.cmc <= 3:
+			if "Land" not in card.type:  # some cards can be cast for free, so only lands are excluded
+				earlyplays += 1
+	if earlyplays < 3:
+		mull_hand = True
+		reason = reason + "early"
+
+	if not 2 < hand_landcount < 5:  # Checks the number of lands in the deck to see if it is playable
+		mull_hand = True
+		reason = reason + "land"
+
+	if hand_cmc > deck_cmc:  # If the cards in hand are more expensive than the average card, mulligan
+		mull_hand = True
+		reason = reason + "expensive"
+
+	return mull_hand, reason
+
+
