@@ -27,8 +27,8 @@ while not programEnd:
 	if not result:
 		print("Keep this hand. Good luck!")
 
-	print("The average converted mana cost of your deck is ", deck_cmc, " compared to your hand's cmc of ", hand_cmc, ".")
-	print("There are ", deck_landcount, " lands in your deck, compared to ", hand_landcount, " in your hand.")
+	print("The average converted mana cost of your deck is", deck_cmc, "compared to your hand's cmc of", hand_cmc, ".")
+	print("There are", deck_landcount, "lands in your deck, compared to", hand_landcount, "in your hand.")
 
 	restart = input("Enter 'exit' to exit, and anything else to continue.")
 	if restart == 'exit':

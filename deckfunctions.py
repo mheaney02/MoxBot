@@ -7,7 +7,7 @@ def import_deck():
 	"""
 	deckImported = False
 	while not deckImported:
-		deckname = input("What is the name of the file?")
+		deckname = input("What is the name of the file? ")
 		try:
 			with open(deckname, 'r') as f:
 				decktext = f.readlines()
@@ -25,19 +25,19 @@ def enter_hand(valid_deck):
 	"""
 	Creates a seven card hand from valid cards in the deck.
 	:param valid_deck: The imported deck of cards
-	:return: A list of Card ob
+	:return: A list of Card objects for each card in the hand,
 	"""
 	deck_hand = [0 for i in range(7)]
 	for i in range(len(deck_hand)):
 		valid_card = False
 		while not valid_card:
-			hand_input = input(f'What is card {i + 1} in your hand?')
+			hand_input = input(f'What is card {i + 1} in your hand? ')
 			hand_input = Card(hand_input)
 			if hand_input.name in valid_deck:
 				valid_card = True
 				deck_hand[i] = hand_input  # Imports card data from Scryfall using the Scrython module
 			elif hand_input not in valid_deck:
-				print("That card is not in this deck! Please enter a valid card.")
+				print("That card is not in this deck! Please enter a valid card. ")
 	return deck_hand
 
 
