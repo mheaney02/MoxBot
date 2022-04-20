@@ -7,4 +7,8 @@ class Card:
 		self.name = card.name()
 		self.cmc = card.cmc()  # Converted mana cost, or how "expensive" the card is in-game
 		self.type = card.type_line()
+		self.color = card.color_identity()
 		return
+
+	#def get_color_identity(self):
+
