@@ -1,5 +1,6 @@
 from card import Card
 
+
 def import_deck():
 	"""
 	Imports a .txt of a user-generated decklist into the program, so it can be utilized in the Card class.
@@ -85,3 +86,14 @@ def mulligan(hand, deck_cmc, hand_cmc, hand_landcount):
 	return mull_hand, reason
 
 
+def define_outcome(result, reason):
+	if result:
+		print("You should mulligan this hand, it is not playable.")
+		if "land" in reason:
+			print("There was not an appropriate number of lands in this hand.")
+		if "expensive" in reason:
+			print("The average converted mana cost of this hand was too expensive.")
+		if "early" in reason:
+			print("There were not enough early plays in this hand.")
+	if not result:
+		print("Keep this hand. Good luck!")

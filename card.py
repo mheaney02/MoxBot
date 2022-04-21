@@ -9,3 +9,4 @@ class Card:
 		self.type = card.type_line()
 		return
 
+
