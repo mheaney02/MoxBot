@@ -63,6 +63,14 @@ def cmc_land_count(valid_deck):
 
 
 def mulligan(hand, deck_cmc, hand_cmc, hand_landcount):
+	"""
+	Determines whether the entered hand is good enough to be kept.
+	:param hand: The user-entered hand of seven valid cards.
+	:param deck_cmc: The total converted mana cost of the deck.
+	:param hand_cmc: The total converted mana cost of the hand.
+	:param hand_landcount: The number of lands present in the hand.
+	:return: A boolean which indicates whether the hand should be kept, as well as a reason if it cannot.
+	"""
 	earlyplays = 0  # the number of cards that can be played in turns 1-3, excluding lands
 	mull_hand = False
 	reason = "none"
@@ -87,6 +95,12 @@ def mulligan(hand, deck_cmc, hand_cmc, hand_landcount):
 
 
 def define_outcome(result, reason):
+	"""
+	Prints the outcome of the mulligan algorithm, as well as the reason.
+	:param result: The boolean result of the mulligan algorithm.
+	:param reason: The list of reasons given by the mulligan algorithm.
+	:return:
+	"""
 	if result:
 		print("You should mulligan this hand, it is not playable.")
 		if "land" in reason:
@@ -97,3 +111,4 @@ def define_outcome(result, reason):
 			print("There were not enough early plays in this hand.")
 	if not result:
 		print("Keep this hand. Good luck!")
+	return
