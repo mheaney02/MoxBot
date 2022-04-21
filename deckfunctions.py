@@ -78,7 +78,7 @@ def mulligan(hand, deck_cmc, hand_cmc, hand_landcount):
 		mull_hand = True
 		reason = reason + "land"
 
-	if hand_cmc > deck_cmc:  # If the cards in hand are more expensive than the average card, mulligan
+	if hand_cmc >= deck_cmc:  # If the cards in hand are more expensive than the average card, mulligan
 		mull_hand = True
 		reason = reason + "expensive"
 
