@@ -74,16 +74,22 @@ def mulligan(hand, deck_cmc, hand_cmc, hand_landcount):
 	earlyplays = 0  # the number of cards that can be played in turns 1-3, excluding lands
 	mull_hand = False
 	reason = "none"
-
+	lands_entered = False
+	while not lands_entered:
+		try:
+			minlands = int(input("What is the minimum number of lands that can be in your opening hand? "))
+			maxlands = int(input("What is the maximum number of lands? "))
+			lands_entered = True
+		except ValueError:
+			print("That is not a valid input!  Please try again. ")
 	for card in hand:
 		if card.cmc <= 3:
-			if "Land" not in card.type:  # some cards can be cast for free, so only lands are excluded
-				earlyplays += 1
+			earlyplays += 1
 	if earlyplays < 3:
 		mull_hand = True
 		reason = reason + "early"
 
-	if not 2 < hand_landcount < 5:  # Checks the number of lands in the deck to see if it is playable
+	if not minlands < hand_landcount < maxlands:  # Checks the number of lands in the deck to see if it is playable
 		mull_hand = True
 		reason = reason + "land"
 
@@ -106,7 +112,7 @@ def define_outcome(result, reason):
 		if "land" in reason:
 			print("There was not an appropriate number of lands in this hand.")
 		if "expensive" in reason:
-			print("The average converted mana cost of this hand was too expensive.")
+			print("The average converted mana cost of this hand was too high.")
 		if "early" in reason:
 			print("There were not enough early plays in this hand.")
 	if not result:
